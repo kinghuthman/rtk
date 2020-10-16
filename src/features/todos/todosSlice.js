@@ -1,17 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+let nextTodoId = 0
+
 const todosSlice = createSlice({
     // string that is used as the prefix for generated action types
   name: 'todos',
   initialState: [],
   // keys become action type strings, functions are reducers ran when action type is dispatched
   reducers: {
-    addTodo(state, action) {
+    addTodo: {
+      reducer(state, action){
       const { id, text } = action.payload
       /* normally bad to mutate state like so, however createSlice and createReducer wraps 
       function with produce form Immer library, which allows us to "mutate" state inside the reducer*/
       state.push({ id, text, completed: false })
     },
+    // customize the payload(must use "payload") if needed here, createSlice automatically calls createAction
+    prepare(text) {
+      return { payload: { text, id: nextTodoId++ } }
+    }
+  },
     toggleTodo(state, action) {
       const todo = state.find(todo => todo.id === action.payload)
       if (todo) {
