@@ -33,6 +33,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
     "prettier": "^1.18.2"
   }
 }
